@@ -16,7 +16,8 @@ def lambda_handler(event, context):
         'data': {
             'customer_id': 'C1000',
             'product_id': 'P2000',
-            'quantity': 5
+            'quantity': 5,
+            'payment_type' : 'mass_payment'
         }
     }
     
