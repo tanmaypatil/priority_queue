@@ -1,9 +1,10 @@
 import json
 import boto3
 import os
+import uuid
 
 # Initialize the SQS client
-sqs = boto3.client('sqs')
+sqs = boto3.client('sqs', region_name='ap-south-1')
 
 # Get the queue URL from environment variables
 QUEUE_URL = os.environ.get('QUEUE_URL')
@@ -25,7 +26,10 @@ def lambda_handler(event, context):
         # Send message to SQS queue
         response = sqs.send_message(
             QueueUrl=QUEUE_URL,
-            MessageBody=json.dumps(message)
+            MessageBody=json.dumps(message),
+            MessageDeduplicationId=str(uuid.uuid4()),
+            MessageGroupId='MP'
+            
         )
         
         # Log the message ID
